@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalized Quiz: Salary, Permit & Canton | Rumbo Suiza</title>
+<meta name="description" content="Answer a short quiz and get an estimate of your salary in Switzerland, your most likely residence permit, and the cantons that best fit you. 100% in your browser.">
+<link rel="canonical" href="cuestionario.html">
+<link rel="alternate" hreflang="en" href="cuestionario.html">
+<link rel="alternate" hreflang="es" href="../es/cuestionario.html">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="nav-wrap">
+    <a class="brand" href="index.html"><span class="brand-mark"><span class="cross"></span></span>Rumbo Suiza</a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav class="primary"><a href="index.html">Home</a><a href="guia.html">The Guide</a><a href="cuestionario.html" class="active">Quiz</a><a href="blog/index.html">Blog</a><a href="sobre-nosotros.html">About</a><a href="contacto.html">Contact</a></nav>
+    <div class="nav-right"><div class="lang-switch"><a href="../es/cuestionario.html">ES</a><a href="cuestionario.html" class="active">EN</a></div></div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="badge">100% in your browser — nothing is stored</span>
+    <h1>Your personalized plan for Switzerland</h1>
+    <p class="lead">Four quick steps. At the end: your most likely permit, a salary range, and the cantons that best match your profile.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:760px;">
+
+    <form id="quiz-form" class="quiz-shell" novalidate>
+      <div class="quiz-progress">
+        <span class="done" data-bar="1"></span><span data-bar="2"></span><span data-bar="3"></span><span data-bar="4"></span>
+      </div>
+
+      <div class="quiz-step active" data-step="1">
+        <h3>1. About you</h3>
+        <div class="field">
+          <label for="age">Age range</label>
+          <select id="age" required>
+            <option value="">Select...</option>
+            <option value="18-25">18–25</option>
+            <option value="26-35">26–35</option>
+            <option value="36-45">36–45</option>
+            <option value="46+">46 or older</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="education">Education level</label>
+          <select id="education" required>
+            <option value="">Select...</option>
+            <option value="fp">Vocational training</option>
+            <option value="grado">Bachelor's degree</option>
+            <option value="master">Master's degree</option>
+            <option value="doctorado">PhD</option>
+            <option value="sin-titulacion">No formal qualification</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="contract">Your contract situation</label>
+          <select id="contract" required>
+            <option value="">Select...</option>
+            <option value="indefinite">I have (or will get) an open-ended contract / ≥1 year</option>
+            <option value="temporary">I have (or will get) a 3–12 month contract</option>
+            <option value="jobseeking">I'm still job-hunting</option>
+            <option value="self">I want to work self-employed</option>
+          </select>
+        </div>
+        <div class="quiz-nav"><span></span><button type="button" class="btn btn-primary" data-next>Next →</button></div>
+      </div>
+
+      <div class="quiz-step" data-step="2">
+        <h3>2. Your profession</h3>
+        <div class="field"><label for="sector">Sector / professional field</label><select id="sector" required></select></div>
+        <div class="field">
+          <label>Years of experience</label>
+          <div class="pill-group" id="experience-group">
+            <input type="radio" name="experience" id="exp1" value="0-2"><label for="exp1">0–2 years</label>
+            <input type="radio" name="experience" id="exp2" value="3-6"><label for="exp2">3–6 years</label>
+            <input type="radio" name="experience" id="exp3" value="7-15"><label for="exp3">7–15 years</label>
+            <input type="radio" name="experience" id="exp4" value="15+"><label for="exp4">15+ years</label>
+          </div>
+        </div>
+        <div class="quiz-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="button" class="btn btn-primary" data-next>Next →</button></div>
+      </div>
+
+      <div class="quiz-step" data-step="3">
+        <h3>3. Languages & canton</h3>
+        <div class="grid grid-2" style="gap:16px;">
+          <div class="field"><label for="lang-de">German</label><select id="lang-de"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
+          <div class="field"><label for="lang-fr">French</label><select id="lang-fr"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
+          <div class="field"><label for="lang-it">Italian</label><select id="lang-it"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
+          <div class="field"><label for="lang-en">English</label><select id="lang-en"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
+        </div>
+        <div class="field">
+          <label for="canton">Do you have a canton preference?</label>
+          <select id="canton">
+            <option value="">No preference — suggest one</option>
+            <option value="zh">Zurich</option>
+            <option value="zg">Zug</option>
+            <option value="ge">Geneva</option>
+            <option value="vd">Vaud (Lausanne)</option>
+            <option value="bs">Basel</option>
+            <option value="ti">Ticino</option>
+            <option value="be">Bern</option>
+            <option value="vs">Valais</option>
+          </select>
+        </div>
+        <div class="quiz-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="button" class="btn btn-primary" data-next>Next →</button></div>
+      </div>
+
+      <div class="quiz-step" data-step="4">
+        <h3>4. Your CV (optional)</h3>
+        <div class="field"><label for="cv-text">Paste your CV text for a quick keyword scan</label><textarea id="cv-text" placeholder="Paste your CV text here (optional)..."></textarea></div>
+        <p class="small text-slate">This is processed only in your browser — it's never sent or stored on any server.</p>
+        <div class="quiz-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="submit" class="btn btn-primary">See my result →</button></div>
+      </div>
+    </form>
+
+    <div class="quiz-result" id="quiz-result">
+      <h2>Your personalized estimate</h2>
+      <div class="result-card"><p class="small text-slate mb-0" id="r-permit-label">Most likely residence pathway</p><p class="big" id="r-permit-title"></p><p id="r-permit-desc" class="mb-0"></p></div>
+      <div class="result-card"><p class="small text-slate mb-0" id="r-salary-label">Estimated gross annual salary</p><p class="big" id="r-salary-range"></p><p id="r-salary-note" class="mb-0 small text-slate"></p></div>
+      <div class="result-card"><p class="small text-slate mb-0" id="r-canton-label">Cantons that could be a good fit</p><div id="r-cantons"></div></div>
+      <div class="result-card" id="r-cv-card"><p class="small text-slate mb-0" id="r-cv-label">Keywords detected in your CV</p><div id="r-cv-keywords"></div><p id="r-cv-disclaimer" class="small text-slate" style="margin-top:8px;"></p></div>
+      <div class="result-card"><p class="small text-slate mb-0" id="r-checklist-label">Your personalized checklist</p><ul class="checklist" id="r-checklist"></ul></div>
+      <div class="disclaimer-box">Indicative estimate generated in your browser from rough public data. It does not replace professional legal, tax or HR advice.</div>
+      <div class="cta-band" style="margin-top:24px;"><h2 id="r-cta-title"></h2><p id="r-cta-body"></p><a href="contacto.html" class="btn btn-white btn-lg" id="r-cta-btn"></a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="grid grid-4">
+      <div><div class="brand" style="margin-bottom:10px;"><span class="brand-mark"><span class="cross"></span></span>Rumbo Suiza</div><p style="color:rgba(255,255,255,.55);font-size:0.9rem;">The independent guide for Spaniards moving to Switzerland: steps, paperwork, and a personalized estimate of your case.</p></div>
+      <div><h4>The Guide</h4><ul><li><a href="visados-permisos.html">Visas & permits</a></li><li><a href="documentos.html">Documents</a></li><li><a href="trabajo-cv.html">Job & CV</a></li><li><a href="vivienda.html">Housing</a></li><li><a href="seguro-medico.html">Health insurance</a></li><li><a href="cuenta-bancaria.html">Bank account</a></li></ul></div>
+      <div><h4>More resources</h4><ul><li><a href="impuestos.html">Taxes</a></li><li><a href="coche-matricula.html">Car & plates</a></li><li><a href="aleman.html">Learning German</a></li><li><a href="cantones-coste-vida.html">Cantons & cost of living</a></li><li><a href="cuestionario.html">Personalized quiz</a></li></ul></div>
+      <div><h4>About / Legal</h4><ul><li><a href="sobre-nosotros.html">About us</a></li><li><a href="blog/index.html">Blog</a></li><li><a href="contacto.html">Contact</a></li><li><a href="privacidad.html">Privacy</a></li><li><a href="terminos.html">Terms</a></li><li><a href="cookies.html">Cookies</a></li></ul></div>
+    </div>
+    <div class="bottom"><span>© 2026 Rumbo Suiza. All rights reserved.</span><span class="disclaimer">Informational content only, not legal or tax advice. Always verify with official authorities (SEM, cantonal offices).</span></div>
+  </div>
+</footer>
+<div id="cookie-banner">
+  <p>We use first-party and third-party cookies (including advertising) to improve your experience. You can accept or reject them. More info in our <a href="cookies.html">Cookie Policy</a>.</p>
+  <div class="actions"><button class="btn btn-ghost" style="border-color:rgba(255,255,255,.3);color:#fff;" data-consent-reject>Reject</button><button class="btn btn-primary" data-consent-accept>Accept</button></div>
+</div>
+<script type="text/plain" data-cookie-consent="required">// (window.adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>window.RS_LANG = "en";</script>
+<script src="../assets/js/quiz.js"></script>
+<script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  "use strict";
+  var sectorSelect = document.getElementById("sector");
+  Object.keys(RumboSuizaQuiz.SECTORS).forEach(function (key) {
+    var opt = document.createElement("option");
+    opt.value = key;
+    opt.textContent = RumboSuizaQuiz.SECTORS[key].en;
+    sectorSelect.appendChild(opt);
+  });
+
+  var form = document.getElementById("quiz-form");
+  var steps = Array.from(form.querySelectorAll(".quiz-step"));
+  var bars = Array.from(form.querySelectorAll("[data-bar]"));
+  var current = 1;
+
+  function show(n) {
+    steps.forEach(function (s) { s.classList.toggle("active", parseInt(s.dataset.step, 10) === n); });
+    bars.forEach(function (b) { b.classList.toggle("done", parseInt(b.dataset.bar, 10) <= n); });
+    current = n;
+  }
+  form.querySelectorAll("[data-next]").forEach(function (btn) { btn.addEventListener("click", function () { if (current < steps.length) show(current + 1); }); });
+  form.querySelectorAll("[data-prev]").forEach(function (btn) { btn.addEventListener("click", function () { if (current > 1) show(current - 1); }); });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var input = {
+      age: document.getElementById("age").value,
+      education: document.getElementById("education").value,
+      contract: document.getElementById("contract").value,
+      sector: sectorSelect.value,
+      experience: (form.querySelector('input[name="experience"]:checked') || {}).value || "0-2",
+      langLevels: {
+        de: document.getElementById("lang-de").value,
+        fr: document.getElementById("lang-fr").value,
+        it: document.getElementById("lang-it").value,
+        en: document.getElementById("lang-en").value
+      },
+      cantonPref: document.getElementById("canton").value,
+      cvText: document.getElementById("cv-text").value
+    };
+
+    var r = RumboSuizaQuiz.compute(input);
+    var t = r.t;
+
+    document.getElementById("r-permit-label").textContent = t.permitTitle;
+    document.getElementById("r-permit-title").textContent = r.permit.title;
+    document.getElementById("r-permit-desc").textContent = r.permit.desc;
+
+    document.getElementById("r-salary-label").textContent = t.salaryTitle;
+    document.getElementById("r-salary-range").textContent = r.salaryRange;
+    document.getElementById("r-salary-note").textContent = t.salaryNote;
+
+    document.getElementById("r-canton-label").textContent = t.cantonTitle;
+    document.getElementById("r-cantons").innerHTML = r.cantons.map(function (c) {
+      return '<div style="margin-bottom:14px;"><strong>' + c.en + '</strong><p class="small text-slate mb-0">' + c.note.en + '</p></div>';
+    }).join("");
+
+    document.getElementById("r-cv-label").textContent = t.cvTitle;
+    document.getElementById("r-cv-disclaimer").textContent = t.cvDisclaimer;
+    var kwEl = document.getElementById("r-cv-keywords");
+    kwEl.innerHTML = r.cvKeywords.length
+      ? r.cvKeywords.map(function (k) { return '<span class="tag">' + k + '</span>'; }).join("")
+      : '<p class="small text-slate mb-0">' + t.cvNone + '</p>';
+
+    document.getElementById("r-checklist-label").textContent = t.checklistTitle;
+    document.getElementById("r-checklist").innerHTML = r.steps.map(function (s) { return "<li>" + s.en + "</li>"; }).join("");
+
+    document.getElementById("r-cta-title").textContent = t.ctaTitle;
+    document.getElementById("r-cta-body").textContent = t.ctaBody;
+    document.getElementById("r-cta-btn").textContent = t.ctaBtn;
+
+    form.style.display = "none";
+    var resultEl = document.getElementById("quiz-result");
+    resultEl.classList.add("active");
+    resultEl.scrollIntoView({ behavior: "smooth" });
+  });
+})();
+</script>
+</body>
+</html>
