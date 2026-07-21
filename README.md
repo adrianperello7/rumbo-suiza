@@ -13,6 +13,15 @@ ads.txt        AdSense verification file (placeholder — see below)
 
 Open `es/index.html` (or `en/index.html`) directly in a browser to preview — no server or build step required.
 
+## Photos
+
+The hero and page banners use two real Swiss mountain photos hotlinked from Wikimedia Commons (defined once as CSS variables `--photo-summer` / `--photo-winter` in `assets/css/style.css`):
+
+- Summer: "Alps of Switzerland, Lake Sils" by Michael Kuhn (kuhnmi), CC BY 2.0.
+- Winter: "Ski Slopes of Verbier" by Realleok, CC BY-SA 4.0.
+
+Both licenses require attribution, which is already included as a small credit line in every page footer — don't remove it if you keep these images. To swap in your own photos: download them into `assets/img/`, then update the two `--photo-summer` / `--photo-winter` values in `style.css` to point at your local files instead of the Wikimedia URLs (better for load speed and gives you full control over licensing).
+
 ## Before you go live: things to fill in
 
 Search the project for these placeholders and replace them:

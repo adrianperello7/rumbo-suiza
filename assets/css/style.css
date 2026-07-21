@@ -5,6 +5,8 @@
    ============================================================ */
 
 :root {
+  --photo-summer: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Alps_of_Switzerland_Lake_Sils_%2823783810673%29.jpg/1920px-Alps_of_Switzerland_Lake_Sils_%2823783810673%29.jpg');
+  --photo-winter: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Ski_Slopes_of_Verbier.jpg/1920px-Ski_Slopes_of_Verbier.jpg');
   --red: #d52b1e;
   --red-dark: #a91f16;
   --red-light: #ffecea;
@@ -58,13 +60,13 @@ li { margin-bottom: 0.4em; }
   text-transform: uppercase; padding: 5px 12px; border-radius: 999px;
 }
 .cross {
-  display: inline-block; width: 0.85em; height: 0.85em; position: relative;
+  display: inline-block; width: 1.6em; height: 1.6em; position: relative;
 }
 .cross::before, .cross::after {
   content: ""; position: absolute; background: currentColor;
 }
-.cross::before { top: 0; left: 38%; width: 24%; height: 100%; }
-.cross::after { left: 0; top: 38%; height: 24%; width: 100%; }
+.cross::before { top: 13%; left: 36%; width: 28%; height: 74%; }
+.cross::after { left: 13%; top: 36%; height: 28%; width: 74%; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -94,8 +96,9 @@ header.site {
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--ink); }
 .brand:hover { text-decoration: none; }
 .brand-mark {
-  width: 34px; height: 34px; border-radius: 9px; background: var(--red);
+  width: 40px; height: 40px; border-radius: 6px; background: var(--red);
   color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  flex-shrink: 0;
 }
 nav.primary { display: flex; align-items: center; gap: 22px; }
 nav.primary a { color: var(--ink-soft); font-weight: 600; font-size: 0.95rem; }
@@ -120,13 +123,18 @@ nav.primary a.active { color: var(--red); }
 
 /* ---------- Hero with mountain motif ---------- */
 .hero {
-  position: relative; overflow: hidden;
-  background: linear-gradient(180deg, #eef3f6 0%, #fff 100%);
-  padding: 80px 0 0;
+  position: relative; overflow: hidden; color: #fff;
+  min-height: 580px; display: flex; align-items: flex-end;
+  background-image:
+    linear-gradient(180deg, rgba(9,15,20,.62) 0%, rgba(9,15,20,.4) 40%, rgba(9,15,20,.18) 68%, #fff 100%),
+    var(--photo-summer);
+  background-size: cover; background-position: center 38%; background-repeat: no-repeat;
+  padding: 150px 0 0;
 }
-.hero-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px 40px; position: relative; z-index: 2; }
-.hero h1 { max-width: 780px; }
-.hero .lead { font-size: 1.15rem; max-width: 640px; }
+.hero-inner { max-width: var(--max); margin: 0 auto; padding: 0 24px 72px; position: relative; z-index: 2; }
+.hero h1 { max-width: 780px; color: #fff; }
+.hero .lead { font-size: 1.15rem; max-width: 640px; color: rgba(255,255,255,.92); }
+.hero .badge { background: rgba(255,255,255,.16); color: #fff; backdrop-filter: blur(4px); }
 .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 24px; }
 .mountains {
   width: 100%; display: block; margin-top: 32px;
@@ -138,12 +146,30 @@ nav.primary a.active { color: var(--red); }
 .mountains .sun { fill: var(--gold); opacity: .85; }
 
 .page-hero {
-  background: linear-gradient(135deg, var(--alpine-1), var(--alpine-2));
+  background-image:
+    linear-gradient(135deg, rgba(39,65,86,.88), rgba(61,90,115,.82)),
+    var(--photo-summer);
+  background-size: cover; background-position: center 40%; background-repeat: no-repeat;
   color: #fff; padding: 64px 0 48px; position: relative; overflow: hidden;
 }
 .page-hero h1 { color: #fff; }
 .page-hero .lead { color: rgba(255,255,255,.85); max-width: 700px; }
 .page-hero .badge { background: rgba(255,255,255,.15); color: #fff; }
+
+/* ---------- Season bands (things-to-do page) ---------- */
+.season-band {
+  padding: 96px 0; color: #fff; position: relative; background-size: cover; background-position: center;
+}
+.season-band .container { max-width: 720px; }
+.season-band h2 { color: #fff; }
+.season-band p { color: rgba(255,255,255,.92); }
+.season-band .badge { background: rgba(255,255,255,.18); color: #fff; }
+.season-summer {
+  background-image: linear-gradient(135deg, rgba(18,54,36,.6), rgba(10,28,20,.72)), var(--photo-summer);
+}
+.season-winter {
+  background-image: linear-gradient(135deg, rgba(18,36,64,.62), rgba(10,20,38,.74)), var(--photo-winter);
+}
 
 /* ---------- Cards / grids ---------- */
 .grid { display: grid; gap: 22px; }
