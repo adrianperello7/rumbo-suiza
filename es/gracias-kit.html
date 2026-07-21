@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gracias por tu compra | Rumbo Suiza</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="nav-wrap">
+    <a class="brand" href="./"><span class="brand-mark"><span class="cross"></span></span>Rumbo Suiza</a>
+    <div class="nav-right"><div class="lang-switch"><a href="gracias-kit" class="active">ES</a><a href="../en/thank-you-kit">EN</a></div></div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="badge"><span class="cross"></span> Compra confirmada</span>
+    <h1>¡Gracias! Tu Kit ya está en camino</h1>
+    <p class="lead">La descarga debería empezar automáticamente en unos segundos. Si no ocurre, usa el botón de abajo.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width:560px;">
+    <div class="sidebar-card" style="text-align:center;">
+      <p id="status" class="text-slate">Verificando tu compra…</p>
+      <a href="#" id="download-btn" class="btn btn-primary btn-lg btn-block" style="display:none;margin-top:14px;">Descargar el Kit (PDF) →</a>
+      <p id="error-msg" class="small text-slate" style="display:none;margin-top:14px;">No hemos podido verificar tu compra automáticamente. Escríbenos a <strong>info.rumbosuiza@gmail.com</strong> con tu recibo y te lo enviamos directamente.</p>
+    </div>
+    <p class="small text-slate center" style="margin-top:24px;">
+      <a href="./">← Volver a la web</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="container">
+    <div class="bottom"><span>© 2026 Rumbo Suiza. Todos los derechos reservados.</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var sessionId = params.get("session_id");
+  var status = document.getElementById("status");
+  var btn = document.getElementById("download-btn");
+  var errorMsg = document.getElementById("error-msg");
+
+  if (!sessionId) {
+    status.style.display = "none";
+    errorMsg.style.display = "block";
+    return;
+  }
+
+  var downloadUrl = "/api/download-kit?session_id=" + encodeURIComponent(sessionId);
+  btn.href = downloadUrl;
+  status.textContent = "Compra verificada. Descargando…";
+  btn.style.display = "inline-flex";
+
+  // Trigger the download automatically once.
+  window.location.href = downloadUrl;
+})();
+</script>
+</body>
+</html>
