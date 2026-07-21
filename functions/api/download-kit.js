@@ -7,7 +7,7 @@
 // Cloudflare Pages project (Settings > Environment variables, or
 // `wrangler pages secret put STRIPE_SECRET_KEY`). Never commit the key.
 
-const KIT_PRICE_ID = "price_REEMPLAZAR_CON_EL_ID_REAL";
+const KIT_PRICE_ID = "price_1TvfjyAojxoltlLL5l9ZQUA5";
 
 export async function onRequestGet(context) {
   const { request, env } = context;
