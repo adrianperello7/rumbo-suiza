@@ -1,8 +1,1 @@
-# This file is required by Google AdSense to verify you as an authorized
-# seller of ad space on this domain.
-#
-# Once your AdSense account is approved, replace the line below with the
-# real line Google gives you (Account > Sites > ads.txt in your AdSense
-# dashboard). It looks like:
-#
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-8449717732646599, DIRECT, f08c47fec0942fa0
