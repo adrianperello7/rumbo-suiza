@@ -30,9 +30,10 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: var(--font);
   color: var(--ink);
   background: var(--paper);
@@ -114,6 +115,14 @@ nav.primary a.active { color: var(--red); }
 .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
 
 @media (max-width: 860px) {
+  header.site { backdrop-filter: none; }
+  .nav-wrap { gap: 8px; padding: 12px 16px; }
+  .brand { white-space: nowrap; font-size: 1.05rem; }
+  .brand-mark { width: 32px; height: 32px; font-size: 0.85rem; }
+  .nav-right { gap: 8px; }
+  .nav-right .btn-primary { padding: 6px 10px !important; font-size: 0.72rem !important; white-space: nowrap; }
+  .lang-switch { font-size: 0.75rem; }
+  .lang-switch a { padding: 5px 9px; }
   nav.primary { position: fixed; inset: 62px 0 0 0; background: #fff; flex-direction: column;
     align-items: flex-start; padding: 24px; gap: 18px; transform: translateX(100%);
     transition: transform .25s ease; overflow-y: auto; }
@@ -280,7 +289,7 @@ table.data td { color: var(--ink-soft); }
 .quiz-result { display: none; }
 .quiz-result.active { display: block; animation: fade .3s ease; }
 .result-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
-.result-card .big { font-size: 1.6rem; font-weight: 800; color: var(--red); }
+.big { font-size: 1.6rem; font-weight: 800; color: var(--red); }
 .disclaimer-box { font-size: 0.85rem; color: var(--slate); background: #fff; border: 1px dashed var(--line); padding: 14px 16px; border-radius: var(--radius-sm); margin-top: 16px; }
 
 /* ---------- Cookie banner ---------- */
