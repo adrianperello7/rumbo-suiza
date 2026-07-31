@@ -97,6 +97,12 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://rumbosuiza.com/es/kit"/>
   </url>
   <url>
+    <loc>https://rumbosuiza.com/en/pricing</loc>
+    <lastmod>2026-07-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rumbosuiza.com/en/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rumbosuiza.com/es/precios"/>
+  </url>
+  <url>
     <loc>https://rumbosuiza.com/en/privacidad</loc>
     <lastmod>2026-07-22</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://rumbosuiza.com/en/privacidad"/>
@@ -239,6 +245,12 @@
     <lastmod>2026-07-22</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://rumbosuiza.com/es/kit"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://rumbosuiza.com/en/kit"/>
+  </url>
+  <url>
+    <loc>https://rumbosuiza.com/es/precios</loc>
+    <lastmod>2026-07-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rumbosuiza.com/es/precios"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rumbosuiza.com/en/pricing"/>
   </url>
   <url>
     <loc>https://rumbosuiza.com/es/privacidad</loc>
