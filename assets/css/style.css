@@ -251,19 +251,6 @@ table.data td { color: var(--ink-soft); }
 .sidebar-card ul li { margin-bottom: 8px; }
 .sidebar-card ul a { font-weight: 600; color: var(--ink); font-size: 0.92rem; }
 
-/* ---------- Ad slots ---------- */
-/* display:none until real AdSense ad units are wired in — the placeholder text was showing to real visitors. Remove this line once .ad-slot divs carry real <ins class="adsbygoogle"> units. */
-.ad-slot {
-  display: none;
-  background: repeating-linear-gradient(45deg, #f1f2f4, #f1f2f4 10px, #e9ebee 10px, #e9ebee 20px);
-  border: 1px dashed #c4c9cf; border-radius: var(--radius-sm);
-  align-items: center; justify-content: center;
-  color: #9aa1a9; font-size: 0.78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-  margin: 32px auto; min-height: 100px;
-}
-.ad-slot.banner { min-height: 90px; max-width: 728px; }
-.ad-slot.rect { min-height: 250px; max-width: 300px; }
-.ad-slot.infeed { min-height: 120px; }
 
 /* ---------- Quiz ---------- */
 .quiz-shell { background: var(--fog); border: 1px solid var(--line); border-radius: 20px; padding: 32px; }
