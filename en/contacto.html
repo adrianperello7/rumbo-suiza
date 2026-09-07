@@ -88,16 +88,16 @@
       <h2>Get in touch</h2>
       <p>Tell us briefly about your situation (where you're starting from, what stage you're at, what you need) and which option interests you — single session or package — and we'll reply with next steps.</p>
 
-      <!--
-        Form ready to connect to a static form backend (e.g. Formspree,
-        Getform, or similar) — replace "YOUR-FORM-ID" with your real
-        endpoint once you have an account set up.
-      -->
-      <form action="https://formspree.io/f/YOUR-FORM-ID" method="POST" class="quiz-shell" style="margin-top:24px;">
+      <form id="contact-form" class="quiz-shell" style="margin-top:24px;">
+        <input type="hidden" name="access_key" value="e131747c-ad48-41d1-8f1d-b85e0975187e">
+        <input type="hidden" name="subject" value="New contact message - Rumbo Suiza">
+        <input type="hidden" name="from_name" value="Contact form - Rumbo Suiza">
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
         <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
-        <div class="field"><label for="email">Your email</label><input type="text" id="email" name="email" required></div>
+        <div class="field"><label for="email">Your email</label><input type="email" id="email" name="email" required></div>
         <div class="field"><label for="situation">Tell us about your situation</label><textarea id="situation" name="message" required placeholder="E.g.: I have a job offer in Zurich, starting in 2 months, not sure what documents I need..."></textarea></div>
         <button type="submit" class="btn btn-primary btn-lg btn-block">Send message</button>
+        <p id="contact-status" class="small" style="margin-top:12px;display:none;"></p>
       </form>
 
       <p class="small text-slate" style="margin-top:16px;">You can also write directly to <strong>info.rumbosuiza@gmail.com</strong>.</p>
@@ -132,5 +132,42 @@
   <div class="actions"><button class="btn btn-ghost" style="border-color:rgba(255,255,255,.3);color:#fff;" data-consent-reject>Reject</button><button class="btn btn-primary" data-consent-accept>Accept</button></div>
 </div>
 <script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  var form = document.getElementById("contact-form");
+  var status = document.getElementById("contact-status");
+  if (!form) return;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var btn = form.querySelector("button[type=submit]");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+    status.style.display = "none";
+
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(Object.fromEntries(new FormData(form)))
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data.success) throw new Error(data.message || "error");
+        form.reset();
+        form.querySelectorAll(".field, button[type=submit]").forEach(function (el) { el.style.display = "none"; });
+        status.textContent = "Thank you! We've received your message and will reply by email as soon as possible.";
+        status.style.color = "var(--red)";
+      })
+      .catch(function () {
+        status.textContent = "We couldn't send the message. Please write to us directly at info.rumbosuiza@gmail.com.";
+        btn.disabled = false;
+        btn.textContent = "Send message";
+      })
+      .finally(function () {
+        status.style.display = "block";
+      });
+  });
+})();
+</script>
 </body>
 </html>
