@@ -254,33 +254,88 @@ table.data td { color: var(--ink-soft); }
 
 
 /* ---------- Quiz ---------- */
-.quiz-shell { background: var(--fog); border: 1px solid var(--line); border-radius: 20px; padding: 32px; }
-.quiz-progress { display: flex; gap: 6px; margin-bottom: 26px; }
-.quiz-progress span { flex: 1; height: 6px; border-radius: 4px; background: var(--line); }
+.quiz-shell { background: var(--fog); border: 1px solid var(--line); border-radius: 20px; padding: 32px; box-shadow: var(--shadow); }
+.quiz-progress { display: flex; align-items: center; gap: 0; margin-bottom: 38px; padding: 0 13px; }
+.quiz-progress span { position: relative; flex: 1; height: 4px; background: var(--line); transition: background .25s ease; }
 .quiz-progress span.done { background: var(--red); }
+.quiz-progress span::after {
+  content: attr(data-bar); position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%);
+  width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 2px solid var(--line);
+  display: flex; align-items: center; justify-content: center; font-size: 0.74rem; font-weight: 800;
+  color: var(--slate); transition: all .25s ease;
+}
+.quiz-progress span.done::after { border-color: var(--red); background: var(--red); color: #fff; }
+.quiz-progress span.current::after { box-shadow: 0 0 0 4px var(--red-light); }
+.quiz-progress span:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
 .quiz-step { display: none; }
-.quiz-step.active { display: block; animation: fade .3s ease; }
-@keyframes fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: translateY(0);} }
+.quiz-step.active { display: block; animation: fade .35s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+.quiz-step h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.quiz-step h3 .step-icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--red); }
+.quiz-step > p.small { margin-top: -2px; margin-bottom: 20px; }
 .field { margin-bottom: 20px; }
 .field label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.94rem; }
 .field select, .field input[type="text"], .field input[type="number"], .field textarea {
   width: 100%; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--line);
-  font-size: 0.98rem; font-family: var(--font); background: #fff;
+  font-size: 0.98rem; font-family: var(--font); background: #fff; transition: border-color .15s;
 }
+.field select:focus, .field input:focus, .field textarea:focus { outline: none; border-color: var(--red); }
+.field.invalid select, .field.invalid input { border-color: var(--red); animation: shake .3s ease; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 .field textarea { min-height: 120px; resize: vertical; }
 .pill-group { display: flex; flex-wrap: wrap; gap: 10px; }
 .pill-group input { position: absolute; opacity: 0; }
 .pill-group label {
   border: 1px solid var(--line); background: #fff; padding: 9px 16px; border-radius: 999px;
-  font-weight: 600; font-size: 0.9rem; cursor: pointer; margin: 0;
+  font-weight: 600; font-size: 0.9rem; cursor: pointer; margin: 0; transition: all .15s ease;
 }
+.pill-group label:hover { border-color: var(--red); }
 .pill-group input:checked + label { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pill-group input:disabled + label { opacity: .4; cursor: not-allowed; }
+.field-hint { font-size: 0.8rem; color: var(--slate); margin: -12px 0 12px; }
 .quiz-nav { display: flex; justify-content: space-between; margin-top: 8px; }
 .quiz-result { display: none; }
-.quiz-result.active { display: block; animation: fade .3s ease; }
-.result-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+.quiz-result.active { display: block; animation: fade .35s ease; }
+.result-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; transition: box-shadow .2s ease; }
+.result-card:hover { box-shadow: var(--shadow); }
 .big { font-size: 1.6rem; font-weight: 800; color: var(--red); }
 .disclaimer-box { font-size: 0.85rem; color: var(--slate); background: #fff; border: 1px dashed var(--line); padding: 14px 16px; border-radius: var(--radius-sm); margin-top: 16px; }
+
+/* ---------- Quiz CV upload ---------- */
+.cv-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+.cv-toggle button {
+  flex: 1; padding: 9px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: #fff;
+  font-weight: 700; font-size: 0.85rem; cursor: pointer; color: var(--ink-soft); font-family: var(--font);
+}
+.cv-toggle button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cv-pane { display: none; }
+.cv-pane.active { display: block; }
+.dropzone {
+  display: block; border: 2px dashed var(--line); border-radius: var(--radius); background: #fff; padding: 30px 20px;
+  text-align: center; cursor: pointer; transition: border-color .15s ease, background .15s ease;
+}
+.dropzone:hover, .dropzone.dragover { border-color: var(--red); background: var(--red-light); }
+.dropzone svg { width: 30px; height: 30px; color: var(--slate); margin-bottom: 10px; }
+.dropzone .dz-title { font-weight: 700; margin-bottom: 4px; }
+.dropzone .dz-sub { font-size: 0.82rem; color: var(--slate); }
+.dropzone input[type="file"] { display: none; }
+.cv-file-chip { display: none; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 14px; }
+.cv-file-chip.show { display: flex; }
+.cv-file-chip .name { font-weight: 700; font-size: 0.88rem; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-file-chip button { background: none; border: none; color: var(--slate); cursor: pointer; font-size: 1.15rem; line-height: 1; padding: 4px; }
+.cv-file-chip button:hover { color: var(--red); }
+.cv-status { font-size: 0.85rem; margin-top: 10px; display: none; }
+.cv-status.show { display: block; }
+.cv-status.ok { color: #1a7f37; }
+.cv-status.err { color: var(--red); }
+.cv-status.busy { color: var(--slate); }
+
+/* ---------- Quiz result CV analysis ---------- */
+.cv-stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 14px; }
+.cv-stat { background: var(--fog); border-radius: var(--radius-sm); padding: 10px 14px; flex: 1 1 150px; }
+.cv-stat .k { font-size: 0.7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--slate); font-weight: 700; margin-bottom: 2px; }
+.cv-stat .v { font-weight: 800; font-size: 1rem; }
+.cv-suggest-note { font-size: 0.82rem; color: var(--red-dark); background: var(--red-light); border-radius: var(--radius-sm); padding: 8px 12px; margin-top: 4px; }
 
 /* ---------- Cookie banner ---------- */
 #cookie-banner {

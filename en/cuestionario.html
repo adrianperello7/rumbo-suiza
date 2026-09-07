@@ -54,7 +54,7 @@
       </div>
 
       <div class="quiz-step active" data-step="1">
-        <h3>1. About you</h3>
+        <h3><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.5-4 4.5-6 7.5-6s6 2 7.5 6"/></svg>1. About you</h3>
         <div class="field">
           <label for="age">Age range</label>
           <select id="age" required>
@@ -86,11 +86,19 @@
             <option value="self">I want to work self-employed</option>
           </select>
         </div>
+        <div class="field">
+          <label for="family">Who are you moving with?</label>
+          <select id="family">
+            <option value="solo">Solo</option>
+            <option value="pareja">With a partner</option>
+            <option value="hijos">With kids</option>
+          </select>
+        </div>
         <div class="quiz-nav"><span></span><button type="button" class="btn btn-primary" data-next>Next →</button></div>
       </div>
 
       <div class="quiz-step" data-step="2">
-        <h3>2. Your profession</h3>
+        <h3><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M8 7.5V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/></svg>2. Your profession</h3>
         <div class="field"><label for="sector">Sector / professional field</label><select id="sector" required></select></div>
         <div class="field">
           <label>Years of experience</label>
@@ -101,16 +109,29 @@
             <input type="radio" name="experience" id="exp4" value="15+"><label for="exp4">15+ years</label>
           </div>
         </div>
+        <div class="field">
+          <label>Seniority level <span class="text-slate" style="font-weight:400;">(optional)</span></label>
+          <div class="pill-group" id="seniority-group">
+            <input type="radio" name="seniority" id="sen1" value="junior"><label for="sen1">Junior</label>
+            <input type="radio" name="seniority" id="sen2" value="mid"><label for="sen2">Mid</label>
+            <input type="radio" name="seniority" id="sen3" value="senior"><label for="sen3">Senior</label>
+            <input type="radio" name="seniority" id="sen4" value="lead"><label for="sen4">Manager / Lead</label>
+          </div>
+        </div>
         <div class="quiz-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="button" class="btn btn-primary" data-next>Next →</button></div>
       </div>
 
       <div class="quiz-step" data-step="3">
-        <h3>3. Languages & canton</h3>
+        <h3><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9z"/></svg>3. Languages & canton</h3>
         <div class="grid grid-2" style="gap:16px;">
           <div class="field"><label for="lang-de">German</label><select id="lang-de"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
           <div class="field"><label for="lang-fr">French</label><select id="lang-fr"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
           <div class="field"><label for="lang-it">Italian</label><select id="lang-it"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
           <div class="field"><label for="lang-en">English</label><select id="lang-en"><option value="none">None</option><option value="a1">A1</option><option value="a2">A2</option><option value="b1">B1</option><option value="b2">B2</option><option value="c1">C1</option><option value="c2">C2 / native</option></select></div>
+        </div>
+        <div class="field">
+          <label>What matters most to you? <span class="text-slate" style="font-weight:400;">(pick up to 2)</span></label>
+          <div class="pill-group" id="priorities-group"></div>
         </div>
         <div class="field">
           <label for="canton">Do you have a canton preference?</label>
@@ -130,9 +151,33 @@
       </div>
 
       <div class="quiz-step" data-step="4">
-        <h3>4. Your CV (optional)</h3>
-        <div class="field"><label for="cv-text">Paste your CV text for a quick keyword scan</label><textarea id="cv-text" placeholder="Paste your CV text here (optional)..."></textarea></div>
-        <p class="small text-slate">This is processed only in your browser — it's never sent or stored on any server.</p>
+        <h3><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 16.5h6"/></svg>4. Your CV (optional)</h3>
+        <p class="small text-slate">To fine-tune your detected experience, job title and sector. Everything is processed in your browser — your CV is never uploaded to any server.</p>
+
+        <div class="cv-toggle">
+          <button type="button" data-cv-tab="pdf" class="active">Upload PDF</button>
+          <button type="button" data-cv-tab="text">Paste text</button>
+        </div>
+
+        <div class="cv-pane active" data-cv-pane="pdf">
+          <label class="dropzone" id="cv-dropzone" for="cv-file">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-1-7.86A5.5 5.5 0 0 1 16.5 8h.5a4.5 4.5 0 0 1 1 8.9"/><path d="M12 12v7M9.5 14.5 12 12l2.5 2.5"/></svg>
+            <div class="dz-title">Drag your CV here or click to choose a file</div>
+            <div class="dz-sub">PDF only, max 8&nbsp;MB</div>
+            <input type="file" id="cv-file" accept="application/pdf">
+          </label>
+          <div class="cv-file-chip" id="cv-file-chip">
+            <span class="name" id="cv-file-name"></span>
+            <button type="button" id="cv-file-remove" aria-label="Remove file">✕</button>
+          </div>
+          <p class="cv-status" id="cv-status"></p>
+        </div>
+
+        <div class="cv-pane" data-cv-pane="text">
+          <div class="field"><label for="cv-text">Paste your CV text</label><textarea id="cv-text" placeholder="Paste your CV text here (optional)..."></textarea></div>
+        </div>
+
+        <p class="small text-slate" style="margin-top:4px;">This is processed only in your browser — it's never sent or stored on any server.</p>
         <div class="quiz-nav"><button type="button" class="btn btn-ghost" data-prev>← Back</button><button type="submit" class="btn btn-primary">See my result →</button></div>
       </div>
     </form>
@@ -142,7 +187,7 @@
       <div class="result-card"><p class="small text-slate mb-0" id="r-permit-label">Most likely residence pathway</p><p class="big" id="r-permit-title"></p><p id="r-permit-desc" class="mb-0"></p></div>
       <div class="result-card"><p class="small text-slate mb-0" id="r-salary-label">Estimated gross annual salary</p><p class="big" id="r-salary-range"></p><p id="r-salary-note" class="mb-0 small text-slate"></p></div>
       <div class="result-card"><p class="small text-slate mb-0" id="r-canton-label">Cantons that could be a good fit</p><div id="r-cantons"></div></div>
-      <div class="result-card" id="r-cv-card"><p class="small text-slate mb-0" id="r-cv-label">Keywords detected in your CV</p><div id="r-cv-keywords"></div><p id="r-cv-disclaimer" class="small text-slate" style="margin-top:8px;"></p></div>
+      <div class="result-card" id="r-cv-card"><p class="small text-slate mb-0" id="r-cv-label">Your CV analysis</p><div class="cv-stats" id="r-cv-stats"></div><div id="r-cv-keywords"></div><p id="r-cv-suggest" class="cv-suggest-note" style="display:none;"></p><p id="r-cv-disclaimer" class="small text-slate" style="margin-top:8px;"></p></div>
       <div class="result-card"><p class="small text-slate mb-0" id="r-checklist-label">Your personalized checklist</p><ul class="checklist" id="r-checklist"></ul></div>
       <div class="disclaimer-box">Indicative estimate generated in your browser from rough public data. It does not replace professional legal, tax or HR advice.</div>
       <div class="cta-band" style="margin-top:24px;"><h2 id="r-cta-title"></h2><p id="r-cta-body"></p><a href="contacto" class="btn btn-white btn-lg" id="r-cta-btn"></a></div>
@@ -166,17 +211,39 @@
   <div class="actions"><button class="btn btn-ghost" style="border-color:rgba(255,255,255,.3);color:#fff;" data-consent-reject>Reject</button><button class="btn btn-primary" data-consent-accept>Accept</button></div>
 </div>
 <script>window.RS_LANG = "en";</script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="../assets/js/quiz.js"></script>
 <script src="../assets/js/main.js"></script>
 <script>
 (function () {
   "use strict";
+
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+  }
+
   var sectorSelect = document.getElementById("sector");
   Object.keys(RumboSuizaQuiz.SECTORS).forEach(function (key) {
     var opt = document.createElement("option");
     opt.value = key;
     opt.textContent = RumboSuizaQuiz.SECTORS[key].en;
     sectorSelect.appendChild(opt);
+  });
+
+  var prioritiesGroup = document.getElementById("priorities-group");
+  Object.keys(RumboSuizaQuiz.PRIORITIES).forEach(function (key) {
+    var input = document.createElement("input");
+    input.type = "checkbox"; input.name = "priorities"; input.id = "prio-" + key; input.value = key;
+    var label = document.createElement("label");
+    label.setAttribute("for", "prio-" + key);
+    label.textContent = RumboSuizaQuiz.PRIORITIES[key].en;
+    prioritiesGroup.appendChild(input);
+    prioritiesGroup.appendChild(label);
+  });
+  prioritiesGroup.addEventListener("change", function () {
+    var boxes = Array.from(prioritiesGroup.querySelectorAll('input[type="checkbox"]'));
+    var checkedCount = boxes.filter(function (b) { return b.checked; }).length;
+    boxes.forEach(function (b) { b.disabled = !b.checked && checkedCount >= 2; });
   });
 
   var form = document.getElementById("quiz-form");
@@ -186,28 +253,130 @@
 
   function show(n) {
     steps.forEach(function (s) { s.classList.toggle("active", parseInt(s.dataset.step, 10) === n); });
-    bars.forEach(function (b) { b.classList.toggle("done", parseInt(b.dataset.bar, 10) <= n); });
+    bars.forEach(function (b) {
+      var idx = parseInt(b.dataset.bar, 10);
+      b.classList.toggle("done", idx <= n);
+      b.classList.toggle("current", idx === n);
+    });
     current = n;
   }
-  form.querySelectorAll("[data-next]").forEach(function (btn) { btn.addEventListener("click", function () { if (current < steps.length) show(current + 1); }); });
+  function validateStep(n) {
+    var required = steps[n - 1].querySelectorAll("[required]");
+    var valid = true;
+    required.forEach(function (el) {
+      if (!el.value) {
+        valid = false;
+        var wrap = el.closest(".field") || el;
+        wrap.classList.add("invalid");
+        setTimeout(function () { wrap.classList.remove("invalid"); }, 400);
+      }
+    });
+    return valid;
+  }
+  form.querySelectorAll("[data-next]").forEach(function (btn) { btn.addEventListener("click", function () { if (current < steps.length && validateStep(current)) show(current + 1); }); });
   form.querySelectorAll("[data-prev]").forEach(function (btn) { btn.addEventListener("click", function () { if (current > 1) show(current - 1); }); });
+
+  /* ---------- CV tabs (PDF upload vs paste text) ---------- */
+  var cvTabButtons = Array.from(form.querySelectorAll("[data-cv-tab]"));
+  var cvPanes = Array.from(form.querySelectorAll("[data-cv-pane]"));
+  cvTabButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      cvTabButtons.forEach(function (b) { b.classList.toggle("active", b === btn); });
+      cvPanes.forEach(function (p) { p.classList.toggle("active", p.dataset.cvPane === btn.dataset.cvTab); });
+    });
+  });
+
+  /* ---------- PDF drag & drop + extraction ---------- */
+  var dropzone = document.getElementById("cv-dropzone");
+  var fileInput = document.getElementById("cv-file");
+  var fileChip = document.getElementById("cv-file-chip");
+  var fileNameEl = document.getElementById("cv-file-name");
+  var fileRemoveBtn = document.getElementById("cv-file-remove");
+  var statusEl = document.getElementById("cv-status");
+  var cvTextarea = document.getElementById("cv-text");
+  var extractedCvText = "";
+
+  function setStatus(msg, kind) {
+    statusEl.textContent = msg;
+    statusEl.className = "cv-status show" + (kind ? " " + kind : "");
+  }
+  function clearFile() {
+    fileInput.value = "";
+    extractedCvText = "";
+    fileChip.classList.remove("show");
+    statusEl.className = "cv-status";
+  }
+  function handleFile(file) {
+    if (!file) return;
+    if (file.type !== "application/pdf") { setStatus("That file isn't a PDF. Try another one, or paste the text directly.", "err"); return; }
+    if (file.size > 8 * 1024 * 1024) { setStatus("This PDF is over 8 MB — try a lighter file.", "err"); return; }
+    if (!window.pdfjsLib) { setStatus("The PDF reader couldn't load. Try pasting the text directly.", "err"); return; }
+
+    fileNameEl.textContent = file.name;
+    fileChip.classList.add("show");
+    setStatus("Reading your CV…", "busy");
+
+    file.arrayBuffer().then(function (buf) {
+      return window.pdfjsLib.getDocument({ data: buf }).promise;
+    }).then(function (pdf) {
+      var pages = [];
+      var maxPages = Math.min(pdf.numPages, 15);
+      var chain = Promise.resolve();
+      for (var i = 1; i <= maxPages; i++) {
+        (function (pageNum) {
+          chain = chain.then(function () { return pdf.getPage(pageNum); })
+            .then(function (page) { return page.getTextContent(); })
+            .then(function (content) { pages.push(content.items.map(function (it) { return it.str; }).join(" ")); });
+        })(i);
+      }
+      return chain.then(function () { return pages.join("\n"); });
+    }).then(function (text) {
+      extractedCvText = text;
+      if (text.trim().length < 20) {
+        setStatus("We couldn't extract text from this PDF (is it a scanned image?). Try pasting the text directly.", "err");
+      } else {
+        setStatus("✓ Text extracted (" + text.trim().length + " characters) — we'll use it to fine-tune your result.", "ok");
+      }
+    }).catch(function () {
+      setStatus("We couldn't read this PDF. Try pasting the text directly.", "err");
+    });
+  }
+  fileInput.addEventListener("change", function () { handleFile(fileInput.files[0]); });
+  fileRemoveBtn.addEventListener("click", function (e) { e.preventDefault(); clearFile(); });
+  ["dragover", "dragenter"].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) { e.preventDefault(); dropzone.classList.add("dragover"); });
+  });
+  ["dragleave", "dragend"].forEach(function (evt) {
+    dropzone.addEventListener(evt, function () { dropzone.classList.remove("dragover"); });
+  });
+  dropzone.addEventListener("drop", function (e) {
+    e.preventDefault();
+    dropzone.classList.remove("dragover");
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    var activeTab = (form.querySelector("[data-cv-tab].active") || {}).dataset || {};
+    var cvText = activeTab.cvTab === "text" ? cvTextarea.value : (extractedCvText || cvTextarea.value);
+
     var input = {
       age: document.getElementById("age").value,
       education: document.getElementById("education").value,
       contract: document.getElementById("contract").value,
+      family: document.getElementById("family").value,
       sector: sectorSelect.value,
       experience: (form.querySelector('input[name="experience"]:checked') || {}).value || "0-2",
+      seniority: (form.querySelector('input[name="seniority"]:checked') || {}).value || "",
       langLevels: {
         de: document.getElementById("lang-de").value,
         fr: document.getElementById("lang-fr").value,
         it: document.getElementById("lang-it").value,
         en: document.getElementById("lang-en").value
       },
+      priorities: Array.from(form.querySelectorAll('input[name="priorities"]:checked')).map(function (b) { return b.value; }),
       cantonPref: document.getElementById("canton").value,
-      cvText: document.getElementById("cv-text").value
+      cvText: cvText
     };
 
     var r = RumboSuizaQuiz.compute(input);
@@ -228,6 +397,20 @@
 
     document.getElementById("r-cv-label").textContent = t.cvTitle;
     document.getElementById("r-cv-disclaimer").textContent = t.cvDisclaimer;
+
+    var statsHtml = "";
+    if (r.cvTitle) statsHtml += '<div class="cv-stat"><div class="k">' + t.cvTitleLabel + '</div><div class="v">' + r.cvTitle + '</div></div>';
+    if (r.cvYears != null) statsHtml += '<div class="cv-stat"><div class="k">' + t.cvYearsLabel + '</div><div class="v">' + t.cvYearsValue(r.cvYears) + '</div></div>';
+    document.getElementById("r-cv-stats").innerHTML = statsHtml;
+
+    var suggestEl = document.getElementById("r-cv-suggest");
+    if (r.cvSuggestedSectorLabel) {
+      suggestEl.style.display = "block";
+      suggestEl.innerHTML = "<strong>" + t.cvSuggestLabel + ": " + r.cvSuggestedSectorLabel + ".</strong> " + t.cvSuggestNote;
+    } else {
+      suggestEl.style.display = "none";
+    }
+
     var kwEl = document.getElementById("r-cv-keywords");
     kwEl.innerHTML = r.cvKeywords.length
       ? r.cvKeywords.map(function (k) { return '<span class="tag">' + k + '</span>'; }).join("")
