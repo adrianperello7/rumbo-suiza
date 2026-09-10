@@ -187,7 +187,7 @@
       <div class="result-card"><p class="small text-slate mb-0" id="r-permit-label">Most likely residence pathway</p><p class="big" id="r-permit-title"></p><p id="r-permit-desc" class="mb-0"></p></div>
       <div class="result-card"><p class="small text-slate mb-0" id="r-salary-label">Estimated gross annual salary</p><p class="big" id="r-salary-range"></p><p id="r-salary-note" class="mb-0 small text-slate"></p></div>
       <div class="result-card"><p class="small text-slate mb-0" id="r-canton-label">Cantons that could be a good fit</p><div id="r-cantons"></div></div>
-      <div class="result-card" id="r-cv-card"><p class="small text-slate mb-0" id="r-cv-label">Your CV analysis</p><div class="cv-stats" id="r-cv-stats"></div><div id="r-cv-keywords"></div><p id="r-cv-suggest" class="cv-suggest-note" style="display:none;"></p><p id="r-cv-disclaimer" class="small text-slate" style="margin-top:8px;"></p></div>
+      <div class="result-card" id="r-cv-card"><p class="small text-slate mb-0" id="r-cv-label">Your CV analysis</p><div class="cv-stats" id="r-cv-stats"></div><div id="r-cv-keywords"></div><p id="r-cv-suggest" class="cv-suggest-note" style="display:none;"></p><p id="r-cv-impact" class="small" style="display:none;margin-top:8px;color:#1a7f37;"></p><p id="r-cv-disclaimer" class="small text-slate" style="margin-top:8px;"></p></div>
       <div class="result-card"><p class="small text-slate mb-0" id="r-checklist-label">Your personalized checklist</p><ul class="checklist" id="r-checklist"></ul></div>
       <div class="disclaimer-box">Indicative estimate generated in your browser from rough public data. It does not replace professional legal, tax or HR advice.</div>
       <div class="cta-band" style="margin-top:24px;"><h2 id="r-cta-title"></h2><p id="r-cta-body"></p><a href="contacto" class="btn btn-white btn-lg" id="r-cta-btn"></a></div>
@@ -220,6 +220,28 @@
 
   if (window.pdfjsLib) {
     window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+  }
+
+  /* pdf.js gives text as small positioned runs, not words — joining them
+     with a plain space merges or splits real words (breaks keyword
+     matching downstream). Rebuild lines/word-gaps from each run's actual
+     position instead. */
+  function pdfContentToText(content) {
+    var lines = [], line = "", lastY = null, lastEndX = null;
+    content.items.forEach(function (item) {
+      var x = item.transform[4], y = item.transform[5];
+      if (lastY !== null && Math.abs(y - lastY) > 2) {
+        lines.push(line);
+        line = "";
+        lastEndX = null;
+      }
+      if (lastEndX !== null && x - lastEndX > (item.height || 6) * 0.2) line += " ";
+      line += item.str;
+      lastY = y;
+      lastEndX = x + (item.width || 0);
+    });
+    if (line) lines.push(line);
+    return lines.join("\n");
   }
 
   var sectorSelect = document.getElementById("sector");
@@ -326,7 +348,7 @@
         (function (pageNum) {
           chain = chain.then(function () { return pdf.getPage(pageNum); })
             .then(function (page) { return page.getTextContent(); })
-            .then(function (content) { pages.push(content.items.map(function (it) { return it.str; }).join(" ")); });
+            .then(function (content) { pages.push(pdfContentToText(content)); });
         })(i);
       }
       return chain.then(function () { return pages.join("\n"); });
@@ -409,6 +431,14 @@
       suggestEl.innerHTML = "<strong>" + t.cvSuggestLabel + ": " + r.cvSuggestedSectorLabel + ".</strong> " + t.cvSuggestNote;
     } else {
       suggestEl.style.display = "none";
+    }
+
+    var impactEl = document.getElementById("r-cv-impact");
+    if (r.cvInfluencedSalary && r.cvYears != null) {
+      impactEl.style.display = "block";
+      impactEl.textContent = t.cvImpactNote(r.cvYears);
+    } else {
+      impactEl.style.display = "none";
     }
 
     var kwEl = document.getElementById("r-cv-keywords");

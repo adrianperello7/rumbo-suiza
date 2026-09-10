@@ -85,6 +85,7 @@
       cvTitleLabel: "Puesto detectado",
       cvSuggestLabel: "Tu CV encaja más con el sector",
       cvSuggestNote: "Distinto al sector que elegiste — puedes volver atrás y cambiarlo si quieres una estimación más ajustada.",
+      cvImpactNote: function (y) { return "Detectamos ~" + y + (y === 1 ? " año" : " años") + " de experiencia real en tu CV (por fechas de tus puestos) y lo hemos usado para ajustar la horquilla salarial de arriba, junto con lo que marcaste a mano."; },
       ctaTitle: "¿Quieres una valoración real, no solo una estimación?",
       ctaBody: "Revisamos tu caso concreto — CV, expectativas salariales, cantón y trámites — y te damos un plan de acción personalizado.",
       ctaBtn: "Solicitar asesoría personalizada",
@@ -122,6 +123,7 @@
       cvTitleLabel: "Detected job title",
       cvSuggestLabel: "Your CV best matches the sector",
       cvSuggestNote: "That's different from the sector you picked — go back and change it if you want a tighter estimate.",
+      cvImpactNote: function (y) { return "We detected ~" + y + (y === 1 ? " year" : " years") + " of real experience in your CV (from your job dates) and used it to adjust the salary range above, alongside what you picked manually."; },
       ctaTitle: "Want a real assessment, not just an estimate?",
       ctaBody: "We review your actual situation — CV, salary expectations, canton and paperwork — and give you a personalized action plan.",
       ctaBtn: "Request personalized consulting",
@@ -193,15 +195,30 @@
     return scored.slice(0, 3).map(function (s) { return s.canton; });
   }
 
+  /* Accent/case-insensitive matching with word boundaries, so "ingenieria"
+     (common in poorly-encoded PDFs) still matches "ingeniería", and short
+     keywords like "sql" don't match inside unrelated words. */
+  function normalize(s) {
+    return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  }
+  function escapeRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  var KEYWORD_RE_CACHE = {};
+  function keywordRe(kw) {
+    if (!KEYWORD_RE_CACHE[kw]) {
+      KEYWORD_RE_CACHE[kw] = new RegExp("(^|[^a-z0-9à-ÿ])" + escapeRe(normalize(kw)) + "([^a-z0-9à-ÿ]|$)");
+    }
+    return KEYWORD_RE_CACHE[kw];
+  }
+
   function scanCV(text) {
     if (!text || text.trim().length < 10) return { keywords: [], sectorCounts: {} };
-    var lower = text.toLowerCase();
+    var norm = normalize(text);
     var found = [];
     var sectorCounts = {};
     Object.keys(CV_KEYWORDS).forEach(function (sector) {
       var count = 0;
       CV_KEYWORDS[sector].forEach(function (kw) {
-        if (lower.indexOf(kw) !== -1) {
+        if (keywordRe(kw).test(norm)) {
           count++;
           if (found.indexOf(kw) === -1) found.push(kw);
         }
@@ -213,12 +230,12 @@
 
   function detectTitle(text) {
     if (!text) return { title: null, sectorCounts: {} };
-    var lower = text.toLowerCase();
+    var norm = normalize(text);
     var best = null;
     var sectorCounts = {};
     Object.keys(JOB_TITLES).forEach(function (sector) {
       JOB_TITLES[sector].forEach(function (title) {
-        if (lower.indexOf(title) !== -1) {
+        if (keywordRe(title).test(norm)) {
           sectorCounts[sector] = (sectorCounts[sector] || 0) + 1;
           if (!best || title.length > best.length) best = title;
         }
@@ -228,24 +245,34 @@
     return { title: titleCased, sectorCounts: sectorCounts };
   }
 
+  /* Sums real "YYYY - YYYY|presente" work-history ranges (merging overlaps
+     so concurrent jobs aren't double-counted) instead of the old min/max
+     span of every loose 4-digit number in the document — that picked up
+     birth years, postal codes, etc. and made very different CVs produce
+     the same experience estimate. */
   function detectYears(text) {
     if (!text) return null;
     var now = new Date().getFullYear();
-    var explicitMatch = text.match(/(\d{1,2})\s*\+?\s*(años|year|yrs)/i);
+    var explicitMatch = text.match(/(\d{1,2})\s*\+?\s*(años de experiencia|years? of experience|años|year|yrs)/i);
     var explicit = explicitMatch ? parseInt(explicitMatch[1], 10) : null;
 
-    var years = [];
-    var re = /(19|20)\d{2}/g, m;
-    while ((m = re.exec(text))) {
-      var y = parseInt(m[0], 10);
-      if (y >= 1985 && y <= now) years.push(y);
+    var rangeRe = /(19|20)\d{2}\s*(?:-|–|—|a|al|hasta|to)\s*((19|20)\d{2}|actualidad|presente|actual|present|current|ongoing|hoy(?:\s+en\s+d[ií]a)?|now)/gi;
+    var ranges = [], m;
+    while ((m = rangeRe.exec(text))) {
+      var startY = parseInt(m[0].match(/(19|20)\d{2}/)[0], 10);
+      var endY = /^(19|20)\d{2}$/.test(m[2]) ? parseInt(m[2], 10) : now;
+      if (startY >= 1970 && startY <= now && endY >= startY && endY <= now) ranges.push([startY, endY]);
     }
     var spanBased = null;
-    if (years.length >= 2) {
-      var min = Math.min.apply(null, years);
-      var max = Math.max.apply(null, years);
-      if (/actualidad|presente|actual|present|current|ongoing|hoy en día/i.test(text)) max = now;
-      spanBased = Math.max(0, max - min);
+    if (ranges.length) {
+      ranges.sort(function (a, b) { return a[0] - b[0]; });
+      var merged = [ranges[0].slice()];
+      ranges.slice(1).forEach(function (r) {
+        var last = merged[merged.length - 1];
+        if (r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+        else merged.push(r.slice());
+      });
+      spanBased = merged.reduce(function (sum, r) { return sum + (r[1] - r[0]); }, 0);
     }
     var result = null;
     if (explicit != null && spanBased != null) result = Math.round((explicit + spanBased) / 2);
@@ -254,12 +281,12 @@
     return Math.max(0, Math.min(40, result));
   }
 
+  /* Continuous curve rather than the same 4 buckets the "years of
+     experience" pill already uses — otherwise a CV rarely changes the
+     result at all when it happens to land in the same bucket you picked. */
   function yearsToFrac(y) {
     if (y == null) return null;
-    if (y <= 2) return 0;
-    if (y <= 6) return 0.35;
-    if (y <= 15) return 0.7;
-    return 1;
+    return Math.max(0, Math.min(1, y / 15));
   }
 
   function analyzeCV(text) {
@@ -280,7 +307,8 @@
       keywords: scan.keywords,
       title: titleInfo.title,
       years: years,
-      suggestedSector: bestCount > 0 ? suggestedSector : null
+      suggestedSector: bestCount > 0 ? suggestedSector : null,
+      suggestedSectorCount: bestCount
     };
   }
 
@@ -330,6 +358,7 @@
         cvYears: cv.years,
         cvTitle: cv.title,
         cvSuggestedSectorLabel: suggestedSectorObj ? suggestedSectorObj[LANG] : null,
+        cvInfluencedSalary: cvFrac != null,
         steps: steps
       };
     }

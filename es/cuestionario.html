@@ -236,6 +236,7 @@
         <div class="cv-stats" id="r-cv-stats"></div>
         <div id="r-cv-keywords"></div>
         <p id="r-cv-suggest" class="cv-suggest-note" style="display:none;"></p>
+        <p id="r-cv-impact" class="small" style="display:none;margin-top:8px;color:#1a7f37;"></p>
         <p id="r-cv-disclaimer" class="small text-slate" style="margin-top:8px;"></p>
       </div>
 
@@ -312,6 +313,28 @@
 
   if (window.pdfjsLib) {
     window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+  }
+
+  /* pdf.js gives text as small positioned runs, not words — joining them
+     with a plain space merges or splits real words (breaks keyword
+     matching downstream). Rebuild lines/word-gaps from each run's actual
+     position instead. */
+  function pdfContentToText(content) {
+    var lines = [], line = "", lastY = null, lastEndX = null;
+    content.items.forEach(function (item) {
+      var x = item.transform[4], y = item.transform[5];
+      if (lastY !== null && Math.abs(y - lastY) > 2) {
+        lines.push(line);
+        line = "";
+        lastEndX = null;
+      }
+      if (lastEndX !== null && x - lastEndX > (item.height || 6) * 0.2) line += " ";
+      line += item.str;
+      lastY = y;
+      lastEndX = x + (item.width || 0);
+    });
+    if (line) lines.push(line);
+    return lines.join("\n");
   }
 
   var sectorSelect = document.getElementById("sector");
@@ -422,7 +445,7 @@
         (function (pageNum) {
           chain = chain.then(function () { return pdf.getPage(pageNum); })
             .then(function (page) { return page.getTextContent(); })
-            .then(function (content) { pages.push(content.items.map(function (it) { return it.str; }).join(" ")); });
+            .then(function (content) { pages.push(pdfContentToText(content)); });
         })(i);
       }
       return chain.then(function () { return pages.join("\n"); });
@@ -506,6 +529,14 @@
       suggestEl.innerHTML = "<strong>" + t.cvSuggestLabel + ": " + r.cvSuggestedSectorLabel + ".</strong> " + t.cvSuggestNote;
     } else {
       suggestEl.style.display = "none";
+    }
+
+    var impactEl = document.getElementById("r-cv-impact");
+    if (r.cvInfluencedSalary && r.cvYears != null) {
+      impactEl.style.display = "block";
+      impactEl.textContent = t.cvImpactNote(r.cvYears);
+    } else {
+      impactEl.style.display = "none";
     }
 
     var kwEl = document.getElementById("r-cv-keywords");

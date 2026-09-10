@@ -2,6 +2,15 @@
 (function () {
   "use strict";
 
+  // Keep the mobile nav overlay anchored right below the header, whether it
+  // wraps to one or two rows (header height varies by viewport/font size).
+  var headerEl = document.querySelector("header.site");
+  function setHeaderHeightVar() {
+    if (headerEl) document.documentElement.style.setProperty("--header-h", headerEl.offsetHeight + "px");
+  }
+  setHeaderHeightVar();
+  window.addEventListener("resize", setHeaderHeightVar);
+
   // Mobile nav toggle
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.querySelector("nav.primary");
